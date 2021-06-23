@@ -18,13 +18,14 @@ const TaskItem = (props) => {
 
   const dispatch = useDispatch();
   const handleCheck = () => {
-    dispatch(checkTask(props.id));
+    const task = data.find((task) => task.id === props.id);
+    dispatch(checkTask(props.id, task));
   };
   const handleDelete = () => {
     dispatch(deleteTask(props.id));
   };
   const handleChangeTask = () => {
-    const task = data.find((task) => (task.id = props.id));
+    const task = data.find((task) => task.id === props.id);
     dispatch(changeTask(props.id, task));
   };
   console.log(props.isFinished);

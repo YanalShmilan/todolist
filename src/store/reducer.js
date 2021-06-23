@@ -5,7 +5,6 @@ import {
   CHECK_TASK,
   FETCH_TASKS,
 } from './actions';
-import data from '../data';
 const initialState = {
   tasks: [],
 };
@@ -19,14 +18,14 @@ const reducer = (state = initialState, action) => {
       };
     }
     case CREATE_TASK:
-      const newTask = action.payload.task;
+      console.log(action.payload.task);
       return {
         ...state,
-        tasks: [...state.tasks, newTask],
+        tasks: [...state.tasks, action.payload.task],
       };
     case DELETE_TASK:
-      const newTasks = state.tasks.filter(
-        (task) => task.id !== action.payload.taskId
+      const newTasks = state.tasks.map(
+        (task) => task.id !== action.payload.taskid ?? task
       );
       return {
         ...state,
@@ -34,7 +33,7 @@ const reducer = (state = initialState, action) => {
       };
     case CHANGE_TASK:
       const newTasks2 = state.tasks.map((task) =>
-        task.id !== action.payload.taskId ? task : action.payload.task
+        task.id !== action.payload.task.id ? task : action.payload.task
       );
       return {
         ...state,

@@ -24,10 +24,9 @@ export const createTask = (task) => {
     try {
       task.status = false;
       const res = await axios.post(`http://localhost:8000/tasks`, task);
-      task = res;
       dispatch({
         type: CREATE_TASK,
-        payload: { task },
+        payload: { task: res.data },
       });
     } catch (error) {
       console.log(error);
@@ -49,32 +48,57 @@ export const deleteTask = (taskId) => {
 };
 export const changeTask = (taskId, task) => {
   return async (dispatch) => {
+    task = {
+      name: task.name,
+      details: task.details,
+      status: task.status,
+      dueData: task.dueData,
+      type: task.type,
+      priority: task.priority,
+    };
     try {
       if (task.priority === 'bg-success') {
         task.priority = 'bg-warning';
       } else if (task.priority === 'bg-warning') {
         task.priority = 'bg-danger';
-      } else {
+      } else if (task.priority === 'bg-danger') {
         task.priority = 'bg-success';
       }
-      console.log(task);
+      console.log('the task', task, taskId);
       const res = await axios.put(
         `http://localhost:8000/tasks/${taskId}`,
         task
       );
-      task = res;
       dispatch({
         type: CHANGE_TASK,
-        payload: { taskId, task },
+        payload: { task: res.data },
       });
     } catch (error) {
       console.log(error);
     }
   };
 };
-export const checkTask = (taskId) => {
-  return {
-    type: CHECK_TASK,
-    payload: { taskId },
+export const checkTask = (taskId, task) => {
+  return async (dispatch) => {
+    task = {
+      name: task.name,
+      details: task.details,
+      status: !task.status,
+      dueData: task.dueData,
+      type: task.type,
+      priority: task.priority,
+    };
+    try {
+      const res = await axios.put(
+        `http://localhost:8000/tasks/${taskId}`,
+        task
+      );
+      dispatch({
+        type: CHECK_TASK,
+        payload: { taskId, task },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
