@@ -24,8 +24,8 @@ const reducer = (state = initialState, action) => {
         tasks: [...state.tasks, action.payload.task],
       };
     case DELETE_TASK:
-      const newTasks = state.tasks.map(
-        (task) => task.id !== action.payload.taskid ?? task
+      const newTasks = state.tasks.filter(
+        (task) => task.id !== action.payload.taskId
       );
       return {
         ...state,
