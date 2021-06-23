@@ -17,8 +17,7 @@ function App() {
           task.status === false &&
           new Date(task.dueDate).getDate() < new Date().getDate() + 1) ||
         (new Date(task.dueDate) < new Date() && task.status === false)
-    )
-    .reverse();
+    ).sort(function(a, b) {     let dateA = new Date(a.dueDate), dateB = new Date(b.dueDate);     return dateB - dateA; });
   const future = data.filter(
     (task) =>
       new Date(task.dueDate).getDate() > new Date().getDate() + 1 &&
