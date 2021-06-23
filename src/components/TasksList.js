@@ -14,19 +14,36 @@ const TaskList = (props) => {
   const dispatch = useDispatch();
   const data = props.data;
   let tasks = [];
-  if (props.name === 'Finshed') {
-    tasks = data.map((task) => (
-      <TaskItem
-        id={task.id}
-        status={task.status}
-        title={task.name}
-        date={<Moment from={new Date()}>{task.dueDate}</Moment>}
-        type={task.type}
-        details={task.details}
-        priority={task.priority}
-        isFinished={true}
-      />
-    ));
+  if (props.name === 'Today') {
+    tasks = data.map((task) => {
+      if (new Date(task.dueDate) < new Date()) {
+        return (
+          <TaskItem
+            id={task.id}
+            status={task.status}
+            title={task.name}
+            date={<Moment from={new Date()}>{task.dueDate}</Moment>}
+            type={task.type}
+            details={task.details}
+            priority={task.priority}
+            isFinished={true}
+          />
+        );
+      } else {
+        return (
+          <TaskItem
+            id={task.id}
+            status={task.status}
+            title={task.name}
+            date={<Moment from={new Date()}>{task.dueDate}</Moment>}
+            type={task.type}
+            details={task.details}
+            priority={task.priority}
+            isFinished={false}
+          />
+        );
+      }
+    });
   } else {
     tasks = data.map((task) => (
       <TaskItem

@@ -6,15 +6,19 @@ import { useSelector } from 'react-redux';
 
 function App() {
   const data = useSelector((state) => state.tasks);
-  const finished = data.filter(
-    (task) => new Date(task.dueDate) < new Date() || task.status === true
-  );
-  const today = data.filter(
-    (task) =>
-      new Date(task.dueDate) > new Date() &&
-      task.status === false &&
-      new Date(task.dueDate).getDate() < new Date().getDate() + 1
-  );
+  // const finished = data.filter(
+  //   (task) => new Date(task.dueDate) < new Date() || task.status === true
+  // );
+  const finished = data.filter((task) => task.status === true);
+  const today = data
+    .filter(
+      (task) =>
+        (new Date(task.dueDate) > new Date() &&
+          task.status === false &&
+          new Date(task.dueDate).getDate() < new Date().getDate() + 1) ||
+        (new Date(task.dueDate) < new Date() && task.status === false)
+    )
+    .reverse();
   const future = data.filter(
     (task) =>
       new Date(task.dueDate).getDate() > new Date().getDate() + 1 &&
