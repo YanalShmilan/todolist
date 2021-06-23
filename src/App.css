@@ -204,7 +204,7 @@ p {
 }
 
 .card-wrapper:hover {
-  box-shadow: 0 0 8px #d3d3d3;
+  /* box-shadow: 0 0 8px #d3d3d3; */
   cursor: pointer;
   max-height: 300px;
 }
